@@ -4,6 +4,16 @@ A modern, AI-inspired expense management platform for individuals, families, and
 
 ---
 
+## 📐 Architecture Overview
+For a detailed explanation of the application's structure, data flow, and deployment, see [ARCHITECTURE.md](./ARCHITECTURE.md).
+
+- **High-level diagrams** of frontend, backend, and database
+- **How authentication, API, and theming work**
+- **Deployment and Dockerization details**
+- **Security and extensibility notes**
+
+---
+
 ## 🚀 Features
 - **Instant Expense Capture:** Snap a photo of your bill or receipt and auto-categorize expenses.
 - **Goal-Based Planning:** Set savings goals and track your progress visually.
