@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, Send, X, Bot } from 'lucide-react';
-
 interface Expense {
   _id: string;
   amount: number;
   category: string;
   description: string;
   date: string;
-  paymentMethod: string;
+  paymentMethod: string;//This is the chatbot work on sample manual data and users stored data..
   tags: string[];
 }
-
 interface Stats {
   totalExpenses: number;
   monthlyExpenses: number;
@@ -26,19 +24,16 @@ interface Stats {
     count: number;
   }>;
 }
-
 interface ChatbotProps {
   expenses: Expense[];
   stats: Stats | null;
 }
-
 interface Message {
   id: string;
   text: string;
   sender: 'user' | 'bot';
   timestamp: Date;
 }
-
 export default function Chatbot({ expenses, stats }: ChatbotProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
@@ -50,10 +45,8 @@ export default function Chatbot({ expenses, stats }: ChatbotProps) {
     }
   ]);
   const [inputValue, setInputValue] = useState('');
-
   const generateResponse = (userMessage: string): string => {
-    const message = userMessage.toLowerCase();
-    
+    const message = userMessage.toLowerCase(); 
     if (!stats) {
       return "I'm still loading your expense data. Please try again in a moment.";
     }
