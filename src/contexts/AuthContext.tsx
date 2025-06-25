@@ -43,6 +43,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
+  // Apply theme to document body
+  useEffect(() => {
+    if (user?.theme === 'dark') {
+      document.body.classList.add('dark');
+    } else {
+      document.body.classList.remove('dark');
+    }
+  }, [user?.theme]);
+
   const fetchUser = async () => {
     try {
       const response = await axios.get('/auth/me');

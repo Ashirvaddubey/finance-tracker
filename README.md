@@ -12,6 +12,8 @@ A modern, AI-inspired expense management platform for individuals, families, and
 - **Advanced Analytics:** Visualize your spending with interactive charts and reports.
 - **Bank-Grade Security:** Your data is encrypted and protected.
 - **Multi-User Support:** Personalized dashboards for every user.
+- **Theme Switching (Light/Dark Mode):** Personalize your experience with a single click from your profile.
+- **Integrated Chatbot Assistant:** Get instant help, tips, and answers to your questions right inside the app.
 
 ---
 
@@ -122,5 +124,11 @@ Showcase the app's look and feel! Replace the image links below with your own sc
 ### (Add more sections as needed)
 
 ---
+
+## 💡 Theme Switching
+Easily toggle between light and dark mode from your profile page. The app will instantly update to match your preference.
+
+## 🤖 Chatbot Assistant
+Use the built-in chatbot for quick help, financial tips, and to answer your questions about using the platform.
 
 **Enjoy taking control of your financial future with Expense Tracker!** 
