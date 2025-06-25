@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/6371b862-bab2-4895-b1bc-7092d3548cb9)# Expense Tracker
+# Expense Tracker
 
 A modern, AI-inspired expense management platform for individuals, families, and teams. Track, analyze, and optimize your expenses with beautiful analytics, smart features, and a secure, user-friendly interface.
 
@@ -112,59 +112,32 @@ For questions, suggestions, or support, open an issue or contact the maintainer.
 
 Showcase the app's look and feel! Replace the image links below with your own screenshots.
 
-### Registration page 
-![Registration Screenshot](![image](https://github.com/user-attachments/assets/4867d64f-6458-463e-903b-c6c5b2200e4c)
-)
+### Registration Page
+![Registration Screenshot](https://github.com/user-attachments/assets/4867d64f-6458-463e-903b-c6c5b2200e4c)
 
-### Login Page 
-![Login Screenshot](![image](https://github.com/user-attachments/assets/755d3638-090a-48aa-87a3-2339337afa2a)
-)
+### Login Page
+![Login Screenshot](https://github.com/user-attachments/assets/755d3638-090a-48aa-87a3-2339337afa2a)
 
-###Add Expense
-![Expenses Screenshot](![image](https://github.com/user-attachments/assets/c2b55a9c-4e10-4104-b2b2-b7c20c8a1a0c)
-)
-)
-###Edit Expenses and Transactions
-![Expenses Screenshot](![image](https://github.com/user-attachments/assets/1bdc11d5-890a-4d06-a3b5-19ae192ef555)
-)
-)
-)
+### Add Expense
+![Expenses Screenshot](https://github.com/user-attachments/assets/c2b55a9c-4e10-4104-b2b2-b7c20c8a1a0c)
 
-
-
-### Layout (Landing Page)
-![Layout Screenshot](screenshots/layout.png)
-
-
+### Edit Expenses and Transactions
+![Expenses Screenshot](https://github.com/user-attachments/assets/1bdc11d5-890a-4d06-a3b5-19ae192ef555)
 
 ### Dashboard
-![Dashboard Screenshot](![Profile Screenshot](![image](https://github.com/user-attachments/assets/7a7c361c-6fd2-4ba4-afb6-1efe216fd320)
-))
-![Dashboard Screenshot](![Profile Screenshot](![image](https://github.com/user-attachments/assets/36e9ae76-6725-4b49-873a-0689570a9254)
-)
-))
+![Dashboard Screenshot](https://github.com/user-attachments/assets/7a7c361c-6fd2-4ba4-afb6-1efe216fd320)
+![Dashboard Screenshot](https://github.com/user-attachments/assets/36e9ae76-6725-4b49-873a-0689570a9254)
 
- 
-###ChatAssistant
-![ChatAssistant Screenshot](![image](https://github.com/user-attachments/assets/7011160a-7334-4b9b-923b-80d6e3936a1d)
-)
-)
-)
-
+### Chat Assistant
+![ChatAssistant Screenshot](https://github.com/user-attachments/assets/7011160a-7334-4b9b-923b-80d6e3936a1d)
 
 ### Profile
-![Profile Screenshot](![image](https://github.com/user-attachments/assets/1cb43fd4-5d1b-47b5-a842-2471bff3f91d)
-)
-)
+![Profile Screenshot](https://github.com/user-attachments/assets/1cb43fd4-5d1b-47b5-a842-2471bff3f91d)
 
+### MongoDB
+![Database Screenshot](https://github.com/user-attachments/assets/bd341511-cd3e-43d3-a657-b20fc3408653)
+![Database Screenshot](https://github.com/user-attachments/assets/c836b3c7-697b-4d94-b7c8-d9ba31ad9e39)
 
-###MongoDb
-![Database Screenshot](![image](![image](https://github.com/user-attachments/assets/bd341511-cd3e-43d3-a657-b20fc3408653)
-)
-)
-![Database Screenshot](![image](https://github.com/user-attachments/assets/c836b3c7-697b-4d94-b7c8-d9ba31ad9e39)
-)
-)
 
 
 
