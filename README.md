@@ -150,3 +150,36 @@ Easily toggle between light and dark mode from your profile page. The app will i
 Use the built-in chatbot for quick help, financial tips, and to answer your questions about using the platform.
 
 **Enjoy taking control of your financial future with Expense Tracker!** 
+
+<<<<<<< HEAD
+**Enjoy taking control of your financial future with Expense Tracker!** 
+=======
+**Enjoy taking control of your financial future with Expense Tracker!**
+
+---
+
+## 🐳 Docker
+
+You can run the entire app (frontend + backend) in a single Docker container.
+
+### 1. Build the Docker image
+```bash
+docker build -t expense-tracker .
+```
+
+### 2. Run the container
+```bash
+docker run -d -p 5000:5000 \
+  -e MONGO_URI=your_mongo_uri \
+  -e JWT_SECRET=your_jwt_secret \
+  --name expense-tracker expense-tracker
+```
+
+- The backend API will be available at [http://localhost:5000/api](http://localhost:5000/api)
+- The frontend will be served at [http://localhost:5000](http://localhost:5000)
+
+> **Note:** You must provide your own MongoDB connection string and JWT secret as environment variables.
+
+--- 
+>>>>>>> c612979 (docs: add Docker instructions to README)
+
