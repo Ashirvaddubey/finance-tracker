@@ -3,25 +3,20 @@ import Expense from '../models/Expense.js';
 import { authenticate } from '../middleware/auth.js';
 
 const router = express.Router();
-
 // Get all expenses for authenticated user
 router.get('/', authenticate, async (req, res) => {
   try {
-    const { page = 1, limit = 10, category, startDate, endDate } = req.query;
-    
-    const query = { user: req.user._id };
-    
+    const { page = 1, limit = 10, category, startDate, endDate } = req.query;  
+    const query = { user: req.user._id };  
     // Add filters
     if (category && category !== 'all') {
       query.category = category;
-    }
-    
+    } 
     if (startDate || endDate) {
       query.date = {};
       if (startDate) query.date.$gte = new Date(startDate);
       if (endDate) query.date.$lte = new Date(endDate);
     }
-
     const expenses = await Expense.find(query)
       .sort({ date: -1 })
       .limit(limit * 1)
@@ -45,23 +40,19 @@ router.get('/', authenticate, async (req, res) => {
     });
   }
 });
-
 // Get expense statistics
 router.get('/stats', authenticate, async (req, res) => {
   try {
-    const userId = req.user._id;
-    
+    const userId = req.user._id;    
     // Get current month stats
     const currentDate = new Date();
     const startOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
-    const endOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
-    
+    const endOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);  
     // Total expenses
     const totalExpenses = await Expense.aggregate([
       { $match: { user: userId } },
       { $group: { _id: null, total: { $sum: '$amount' } } }
     ]);
-
     // Monthly expenses
     const monthlyExpenses = await Expense.aggregate([
       { 
@@ -72,7 +63,6 @@ router.get('/stats', authenticate, async (req, res) => {
       },
       { $group: { _id: null, total: { $sum: '$amount' } } }
     ]);
-
     // Category breakdown
     const categoryBreakdown = await Expense.aggregate([
       { $match: { user: userId } },
@@ -89,7 +79,6 @@ router.get('/stats', authenticate, async (req, res) => {
     // Monthly trend (last 6 months)
     const sixMonthsAgo = new Date();
     sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
-    
     const monthlyTrend = await Expense.aggregate([
       { 
         $match: { 
@@ -162,7 +151,6 @@ router.post('/', authenticate, async (req, res) => {
     });
   }
 });
-
 // Update expense
 router.put('/:id', authenticate, async (req, res) => {
   try {
@@ -177,7 +165,6 @@ router.put('/:id', authenticate, async (req, res) => {
         message: 'Expense not found'
       });
     }
-
     Object.assign(expense, req.body);
     await expense.save();
     await expense.populate('user', 'name email');
@@ -196,7 +183,6 @@ router.put('/:id', authenticate, async (req, res) => {
         errors
       });
     }
-
     res.status(500).json({
       success: false,
       message: 'Error updating expense',
@@ -204,7 +190,6 @@ router.put('/:id', authenticate, async (req, res) => {
     });
   }
 });
-
 // Delete expense
 router.delete('/:id', authenticate, async (req, res) => {
   try {
@@ -219,7 +204,6 @@ router.delete('/:id', authenticate, async (req, res) => {
         message: 'Expense not found'
       });
     }
-
     res.json({
       success: true,
       message: 'Expense deleted successfully'
@@ -232,5 +216,4 @@ router.delete('/:id', authenticate, async (req, res) => {
     });
   }
 });
-
 export default router;
