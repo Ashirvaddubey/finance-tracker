@@ -138,9 +138,6 @@ Showcase the app's look and feel! Replace the image links below with your own sc
 ![Database Screenshot](https://github.com/user-attachments/assets/bd341511-cd3e-43d3-a657-b20fc3408653)
 ![Database Screenshot](https://github.com/user-attachments/assets/c836b3c7-697b-4d94-b7c8-d9ba31ad9e39)
 
-
-
-
 ---
 
 ## 💡 Theme Switching
@@ -149,4 +146,28 @@ Easily toggle between light and dark mode from your profile page. The app will i
 ## 🤖 Chatbot Assistant
 Use the built-in chatbot for quick help, financial tips, and to answer your questions about using the platform.
 
-**Enjoy taking control of your financial future with Expense Tracker!** 
+**Enjoy taking control of your financial future with Expense Tracker!**
+
+---
+
+## 🐳 Docker
+
+You can run the entire app (frontend + backend) in a single Docker container.
+
+### 1. Build the Docker image
+```bash
+docker build -t expense-tracker .
+```
+
+### 2. Run the container
+```bash
+docker run -d -p 5000:5000 \
+  -e MONGO_URI=your_mongo_uri \
+  -e JWT_SECRET=your_jwt_secret \
+  --name expense-tracker expense-tracker
+```
+
+- The backend API will be available at [http://localhost:5000/api](http://localhost:5000/api)
+- The frontend will be served at [http://localhost:5000](http://localhost:5000)
+
+> **Note:** You must provide your own MongoDB connection string and JWT secret as environment variables.
