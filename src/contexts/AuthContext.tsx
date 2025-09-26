@@ -33,6 +33,10 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const API_BASE_URL = import.meta.env.VITE_REACT_APP_API_URL || 'http://localhost:5000';
 
+// Debug: Log the API URL being used
+console.log('API_BASE_URL:', API_BASE_URL);
+console.log('Environment variable:', import.meta.env.VITE_REACT_APP_API_URL);
+
 // Configure axios defaults
 axios.defaults.baseURL = `${API_BASE_URL}/api`;
 
