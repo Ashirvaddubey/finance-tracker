@@ -31,7 +31,7 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const API_BASE_URL = import.meta.env.VITE_REACT_APP_API_URL || 'http://localhost:5000';
+const API_BASE_URL = 'https://finance-tracker-18ib.onrender.com';
 
 // Configure axios defaults
 axios.defaults.baseURL = `${API_BASE_URL}/api`;
