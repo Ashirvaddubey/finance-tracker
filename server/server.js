@@ -13,13 +13,7 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors({
-  origin: [
-    'http://localhost:5173', 
-    'http://localhost:5174',
-    'https://project-fasmd7y5o-ashirvaddubeys-projects.vercel.app',
-    'https://project-2lg1tlbjs-ashirvaddubeys-projects.vercel.app',
-    'https://project-qud3uzhcy-ashirvaddubeys-projects.vercel.app'
-  ],
+  origin: true, // Allow all origins for debugging
   credentials: true
 }));
 app.use(express.json());
