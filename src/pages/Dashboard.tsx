@@ -6,7 +6,9 @@ import ExpenseList from '../components/ExpenseList';
 import ExpenseCharts from '../components/ExpenseCharts';
 import StatsCards from '../components/StatsCards';
 import Chatbot from '../components/Chatbot';
-import { Plus } from 'lucide-react';
+import AdminDashboard from '../components/AdminDashboard';
+import { useAuth } from '../contexts/AuthContext';
+import { Plus, Shield } from 'lucide-react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
@@ -36,11 +38,13 @@ interface Stats {
 }
 
 export default function Dashboard() {
+  const { isAdmin } = useAuth();
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [stats, setStats] = useState<Stats | null>(null);
   const [loading, setLoading] = useState(true);
   const [showAddForm, setShowAddForm] = useState(false);
   const [editingExpense, setEditingExpense] = useState<Expense | null>(null);
+  const [activeTab, setActiveTab] = useState<'expenses' | 'admin'>('expenses');
   const [filters, setFilters] = useState({
     category: 'all',
     startDate: '',
@@ -137,59 +141,98 @@ export default function Dashboard() {
             <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
             <p className="text-gray-600 mt-1">Track and manage your expenses</p>
           </div>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => setShowAddForm(true)}
-            className="mt-4 sm:mt-0 inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl"
-          >
-            <Plus className="w-5 h-5 mr-2" />
-            Add Expense
-          </motion.button>
+          <div className="flex items-center space-x-4 mt-4 sm:mt-0">
+            {/* Tab Navigation for Admin */}
+            {isAdmin() && (
+              <div className="flex bg-gray-100 rounded-lg p-1">
+                <button
+                  onClick={() => setActiveTab('expenses')}
+                  className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                    activeTab === 'expenses'
+                      ? 'bg-white text-gray-900 shadow-sm'
+                      : 'text-gray-600 hover:text-gray-900'
+                  }`}
+                >
+                  Expenses
+                </button>
+                <button
+                  onClick={() => setActiveTab('admin')}
+                  className={`px-4 py-2 rounded-md text-sm font-medium transition-colors flex items-center space-x-1 ${
+                    activeTab === 'admin'
+                      ? 'bg-white text-gray-900 shadow-sm'
+                      : 'text-gray-600 hover:text-gray-900'
+                  }`}
+                >
+                  <Shield className="w-4 h-4" />
+                  <span>Admin</span>
+                </button>
+              </div>
+            )}
+            
+            {/* Add Expense Button - only show for expenses tab */}
+            {activeTab === 'expenses' && (
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setShowAddForm(true)}
+                className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl"
+              >
+                <Plus className="w-5 h-5 mr-2" />
+                Add Expense
+              </motion.button>
+            )}
+          </div>
         </div>
 
-        {/* Stats Cards */}
-        {stats && <StatsCards stats={stats} />}
+        {/* Content based on active tab */}
+        {activeTab === 'admin' ? (
+          <AdminDashboard />
+        ) : (
+          <>
+            {/* Stats Cards */}
+            {stats && <StatsCards stats={stats} />}
 
-        {/* Charts */}
-        {stats && <ExpenseCharts stats={stats} />}
+            {/* Charts */}
+            {stats && <ExpenseCharts stats={stats} />}
 
-        {/* Expense List */}
-        <ExpenseList
-          expenses={expenses}
-          loading={loading}
-          filters={filters}
-          onFiltersChange={setFilters}
-          onEdit={setEditingExpense}
-          onDelete={handleDeleteExpense}
-        />
+            {/* Expense List */}
+            <ExpenseList
+              expenses={expenses}
+              loading={loading}
+              filters={filters}
+              onFiltersChange={setFilters}
+              onEdit={setEditingExpense}
+              onDelete={handleDeleteExpense}
+            />
 
-        {/* Add/Edit Expense Modal */}
-        {(showAddForm || editingExpense) && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto"
-            >
-              <ExpenseForm
-                expense={editingExpense}
-                onSubmit={editingExpense 
-                  ? (data) => handleEditExpense(editingExpense._id, data)
-                  : handleAddExpense
-                }
-                onCancel={() => {
-                  setShowAddForm(false);
-                  setEditingExpense(null);
-                }}
-              />
-            </motion.div>
-          </div>
+            {/* Add/Edit Expense Modal */}
+            {(showAddForm || editingExpense) && (
+              <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  className="bg-white rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto"
+                >
+                  <ExpenseForm
+                    expense={editingExpense}
+                    onSubmit={editingExpense 
+                      ? (data) => handleEditExpense(editingExpense._id, data)
+                      : handleAddExpense
+                    }
+                    onCancel={() => {
+                      setShowAddForm(false);
+                      setEditingExpense(null);
+                    }}
+                  />
+                </motion.div>
+              </div>
+            )}
+
+            {/* Chatbot */}
+            <Chatbot expenses={expenses} stats={stats} />
+          </>
         )}
-
-        {/* Chatbot */}
-        <Chatbot expenses={expenses} stats={stats} />
       </div>
     </DashboardLayout>
   );

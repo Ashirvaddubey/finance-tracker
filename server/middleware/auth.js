@@ -18,7 +18,12 @@ export const authenticate = async (req, res, next) => {
         message: 'Token is not valid'
       });
     }
-    req.user = user;
+    
+    // Add role information from JWT to user object for easier access
+    req.user = {
+      ...user.toObject(),
+      role: decoded.role || user.role
+    };
     next();
   } catch (error) {
     if (error.name === 'JsonWebTokenError') {

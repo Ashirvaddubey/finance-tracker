@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { X, DollarSign, Calendar, Tag, CreditCard } from 'lucide-react';
+import { X, DollarSign, Calendar, Tag, CreditCard, Lock } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
 
 interface Expense {
   _id: string;
@@ -40,6 +41,9 @@ const paymentMethods = [
 ];
 
 export default function ExpenseForm({ expense, onSubmit, onCancel }: ExpenseFormProps) {
+  const { canWrite } = useAuth();
+  const isReadOnly = !canWrite();
+  
   const [formData, setFormData] = useState({
     amount: '',
     category: categories[0],
@@ -92,9 +96,17 @@ export default function ExpenseForm({ expense, onSubmit, onCancel }: ExpenseForm
     >
       {/* Header */}
       <div className="flex items-center justify-between p-6 border-b border-gray-200">
-        <h2 className="text-xl font-semibold text-gray-900">
-          {expense ? 'Edit Expense' : 'Add New Expense'}
-        </h2>
+        <div className="flex items-center space-x-2">
+          <h2 className="text-xl font-semibold text-gray-900">
+            {expense ? 'View Expense' : 'Add New Expense'}
+          </h2>
+          {isReadOnly && (
+            <div className="flex items-center space-x-1 text-amber-600 bg-amber-50 px-2 py-1 rounded-md">
+              <Lock className="w-4 h-4" />
+              <span className="text-sm font-medium">Read Only</span>
+            </div>
+          )}
+        </div>
         <button
           onClick={onCancel}
           className="p-2 text-gray-400 hover:text-gray-600 transition-colors"
@@ -120,7 +132,10 @@ export default function ExpenseForm({ expense, onSubmit, onCancel }: ExpenseForm
               required
               min="0.01"
               step="0.01"
-              className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              disabled={isReadOnly}
+              className={`w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                isReadOnly ? 'bg-gray-100 cursor-not-allowed' : ''
+              }`}
               placeholder="0.00"
             />
           </div>
@@ -136,7 +151,10 @@ export default function ExpenseForm({ expense, onSubmit, onCancel }: ExpenseForm
             value={formData.category}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            disabled={isReadOnly}
+            className={`w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+              isReadOnly ? 'bg-gray-100 cursor-not-allowed' : ''
+            }`}
           >
             {categories.map(category => (
               <option key={category} value={category}>{category}</option>
@@ -156,7 +174,10 @@ export default function ExpenseForm({ expense, onSubmit, onCancel }: ExpenseForm
             required
             rows={3}
             maxLength={200}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+            disabled={isReadOnly}
+            className={`w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none ${
+              isReadOnly ? 'bg-gray-100 cursor-not-allowed' : ''
+            }`}
             placeholder="What did you spend on?"
           />
           <p className="text-sm text-gray-500 mt-1">
@@ -177,7 +198,10 @@ export default function ExpenseForm({ expense, onSubmit, onCancel }: ExpenseForm
               value={formData.date}
               onChange={handleChange}
               required
-              className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              disabled={isReadOnly}
+              className={`w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                isReadOnly ? 'bg-gray-100 cursor-not-allowed' : ''
+              }`}
             />
           </div>
         </div>
@@ -193,7 +217,10 @@ export default function ExpenseForm({ expense, onSubmit, onCancel }: ExpenseForm
               name="paymentMethod"
               value={formData.paymentMethod}
               onChange={handleChange}
-              className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              disabled={isReadOnly}
+              className={`w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                isReadOnly ? 'bg-gray-100 cursor-not-allowed' : ''
+              }`}
             >
               {paymentMethods.map(method => (
                 <option key={method} value={method}>{method}</option>
@@ -214,7 +241,10 @@ export default function ExpenseForm({ expense, onSubmit, onCancel }: ExpenseForm
               name="tags"
               value={formData.tags}
               onChange={handleChange}
-              className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              disabled={isReadOnly}
+              className={`w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                isReadOnly ? 'bg-gray-100 cursor-not-allowed' : ''
+              }`}
               placeholder="work, personal, urgent (comma separated)"
             />
           </div>
@@ -227,16 +257,18 @@ export default function ExpenseForm({ expense, onSubmit, onCancel }: ExpenseForm
             onClick={onCancel}
             className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
           >
-            Cancel
+            {isReadOnly ? 'Close' : 'Cancel'}
           </button>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            type="submit"
-            className="px-6 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl"
-          >
-            {expense ? 'Update Expense' : 'Add Expense'}
-          </motion.button>
+          {!isReadOnly && (
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              type="submit"
+              className="px-6 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl"
+            >
+              {expense ? 'Update Expense' : 'Add Expense'}
+            </motion.button>
+          )}
         </div>
       </form>
     </motion.div>

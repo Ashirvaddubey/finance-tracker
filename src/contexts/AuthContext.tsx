@@ -10,6 +10,7 @@ interface User {
   bio: string;
   currency: string;
   theme: string;
+  role: 'admin' | 'user' | 'read-only';
   createdAt: string;
 }
 
@@ -20,6 +21,12 @@ interface AuthContextType {
   logout: () => void;
   updateProfile: (data: Partial<User>) => Promise<void>;
   loading: boolean;
+  // Role-based helper functions
+  isAdmin: () => boolean;
+  isUser: () => boolean;
+  isReadOnly: () => boolean;
+  canWrite: () => boolean;
+  canAccessAdmin: () => boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -122,13 +129,25 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  // Role-based helper functions
+  const isAdmin = () => user?.role === 'admin';
+  const isUser = () => user?.role === 'user';
+  const isReadOnly = () => user?.role === 'read-only';
+  const canWrite = () => user?.role === 'admin' || user?.role === 'user';
+  const canAccessAdmin = () => user?.role === 'admin';
+
   const value = {
     user,
     login,
     register,
     logout,
     updateProfile,
-    loading
+    loading,
+    isAdmin,
+    isUser,
+    isReadOnly,
+    canWrite,
+    canAccessAdmin
   };
 
   return (

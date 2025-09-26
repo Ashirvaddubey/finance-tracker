@@ -6,7 +6,11 @@
   "type": "module",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "create-admin": "node create-admin.js",
+    "create-demo": "node create-demo-users.js",
+    "create-demo-extended": "node create-demo-users-extended.js",
+    "check-users": "node check-demo-users.js"
   },
   "dependencies": {
     "express": "^4.19.2",

@@ -1,6 +1,7 @@
 import express from 'express';
 import Expense from '../models/Expense.js';
 import { authenticate } from '../middleware/auth.js';
+import { requireWriteAccess, requireOwnershipOrAdmin } from '../middleware/rbac.js';
 
 const router = express.Router();
 // Get all expenses for authenticated user
@@ -118,7 +119,7 @@ router.get('/stats', authenticate, async (req, res) => {
 });
 
 // Create new expense
-router.post('/', authenticate, async (req, res) => {
+router.post('/', authenticate, requireWriteAccess, async (req, res) => {
   try {
     const expenseData = {
       ...req.body,
@@ -152,7 +153,7 @@ router.post('/', authenticate, async (req, res) => {
   }
 });
 // Update expense
-router.put('/:id', authenticate, async (req, res) => {
+router.put('/:id', authenticate, requireWriteAccess, async (req, res) => {
   try {
     const expense = await Expense.findOne({
       _id: req.params.id,
@@ -191,7 +192,7 @@ router.put('/:id', authenticate, async (req, res) => {
   }
 });
 // Delete expense
-router.delete('/:id', authenticate, async (req, res) => {
+router.delete('/:id', authenticate, requireWriteAccess, async (req, res) => {
   try {
     const expense = await Expense.findOneAndDelete({
       _id: req.params.id,
