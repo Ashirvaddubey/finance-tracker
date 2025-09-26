@@ -76,7 +76,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const login = async (email: string, password: string) => {
     try {
+      console.log('🔍 Frontend login attempt:', { email, password });
+      console.log('🔍 Axios base URL:', axios.defaults.baseURL);
+      console.log('🔍 Full URL:', `${axios.defaults.baseURL}/auth/login`);
+      
       const response = await axios.post('/auth/login', { email, password });
+      console.log('✅ Login response:', response.data);
+      
       if (response.data.success) {
         const { token, user } = response.data;
         localStorage.setItem('token', token);
@@ -85,6 +91,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         toast.success('Login successful!');
       }
     } catch (error: any) {
+      console.log('❌ Login error:', error);
+      console.log('❌ Error response:', error.response?.data);
+      console.log('❌ Error status:', error.response?.status);
       const message = error.response?.data?.message || 'Login failed';
       toast.error(message);
       throw error;

@@ -1,54 +1,38 @@
 import mongoose from 'mongoose';
-import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';
+import User from './models/User.js';
 
 dotenv.config();
 
-const UserSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-  avatar: { type: String, default: '' },
-  bio: { type: String, default: '' },
-  currency: { type: String, default: 'USD' },
-  theme: { type: String, default: 'light' },
-  role: { 
-    type: String, 
-    default: 'user', 
-    enum: ['admin', 'user', 'read-only'],
-    required: true 
-  },
-  createdAt: { type: Date, default: Date.now }
-});
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/expense-tracker';
 
-const User = mongoose.model('User', UserSchema);
-
-async function createTestUser() {
+const createTestUser = async () => {
   try {
-    console.log('Connecting to MongoDB...');
-    await mongoose.connect(process.env.MONGO_URI);
-    console.log('Connected to MongoDB');
+    console.log('🔗 Connecting to production MongoDB...');
+    await mongoose.connect(MONGO_URI);
+    console.log('✅ Connected to MongoDB');
 
     // Delete existing test user if exists
     await User.deleteOne({ email: 'test@test.com' });
-    console.log('Deleted existing test user if any');
+    console.log('🗑️ Deleted existing test user if any');
 
     // Create new test user
-    const hashedPassword = await bcrypt.hash('test123', 12);
-    const user = new User({
+    const testUser = new User({
       name: 'Test User',
       email: 'test@test.com',
-      password: hashedPassword,
+      password: 'test123',
       role: 'admin'
     });
 
-    await user.save();
-    console.log('✅ Created test user: test@test.com / test123');
+    await testUser.save();
+    console.log('✅ Test user created successfully!');
+    console.log('📧 Email: test@test.com');
+    console.log('🔑 Password: test123');
+    console.log('👤 Role: admin');
 
-    // Test password
-    const testUser = await User.findOne({ email: 'test@test.com' });
-    const isPasswordValid = await bcrypt.compare('test123', testUser.password);
-    console.log('🔐 Password test:', isPasswordValid);
+    // Test password validation
+    const isValid = await testUser.comparePassword('test123');
+    console.log(`🔐 Password validation test: ${isValid}`);
 
   } catch (error) {
     console.error('❌ Error:', error);
@@ -56,6 +40,6 @@ async function createTestUser() {
     await mongoose.disconnect();
     console.log('📡 Disconnected from MongoDB');
   }
-}
+};
 
 createTestUser();
