@@ -16,6 +16,7 @@ app.use(cors({
   origin: [
     'http://localhost:5173', 
     'http://localhost:5174',
+    'https://project-kdt4fvs6o-ashirvaddubeys-projects.vercel.app',
     'https://project-fvmvw80et-ashirvaddubeys-projects.vercel.app',
     'https://project-fasmd7y5o-ashirvaddubeys-projects.vercel.app',
     'https://project-2lg1tlbjs-ashirvaddubeys-projects.vercel.app',
