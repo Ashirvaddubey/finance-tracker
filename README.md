@@ -468,21 +468,7 @@ curl -H "Authorization: Bearer <admin-token>" http://localhost:5000/api/users
 
 ---
 
-## 📱 **Screenshots**
 
-### **Admin Dashboard**
-![Admin Dashboard](https://via.placeholder.com/800x400/4F46E5/FFFFFF?text=Admin+Dashboard)
-
-### **User Management**
-![User Management](https://via.placeholder.com/800x400/059669/FFFFFF?text=User+Management)
-
-### **Expense Management**
-![Expense Management](https://via.placeholder.com/800x400/DC2626/FFFFFF?text=Expense+Management)
-
-### **Role-based UI**
-![Role-based UI](https://via.placeholder.com/800x400/7C3AED/FFFFFF?text=Role-based+UI)
-
----
 
 ## 🤝 **Contributing**
 
