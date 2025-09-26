@@ -13,18 +13,17 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors({
-  origin: true, // Allow all origins for debugging
+  origin: [
+    'http://localhost:5173', 
+    'http://localhost:5174',
+    'https://project-fvmvw80et-ashirvaddubeys-projects.vercel.app',
+    'https://project-fasmd7y5o-ashirvaddubeys-projects.vercel.app',
+    'https://project-2lg1tlbjs-ashirvaddubeys-projects.vercel.app',
+    'https://project-qud3uzhcy-ashirvaddubeys-projects.vercel.app'
+  ],
   credentials: true
 }));
 app.use(express.json());
-
-// Debug middleware
-app.use((req, res, next) => {
-  console.log(`${req.method} ${req.path}`);
-  console.log('Headers:', req.headers);
-  console.log('Body:', req.body);
-  next();
-});
 
 // Routes
 app.use('/api/auth', authRoutes);
