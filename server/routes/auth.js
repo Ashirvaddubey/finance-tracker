@@ -60,17 +60,28 @@ router.post('/register', async (req, res) => {
 // Login User
 router.post('/login', async (req, res) => {
   try {
-    console.log('Login request received:', { 
-      email: req.body.email, 
-      passwordLength: req.body.password?.length,
-      body: req.body 
-    });
+    console.log('=== LOGIN DEBUG START ===');
+    console.log('Request headers:', req.headers);
+    console.log('Request body:', req.body);
+    console.log('Body type:', typeof req.body);
+    console.log('Body keys:', Object.keys(req.body || {}));
+    console.log('Email:', req.body?.email);
+    console.log('Password:', req.body?.password);
+    console.log('Password length:', req.body?.password?.length);
+    console.log('=== LOGIN DEBUG END ===');
     
     const { email, password } = req.body;
 
     // Find user
+    console.log('Looking for user with email:', email);
     const user = await User.findOne({ email });
+    console.log('User found:', user ? 'YES' : 'NO');
+    if (user) {
+      console.log('User details:', { email: user.email, role: user.role });
+    }
+    
     if (!user) {
+      console.log('❌ User not found, returning error');
       return res.status(400).json({
         success: false,
         message: 'Invalid email or password'
@@ -78,8 +89,12 @@ router.post('/login', async (req, res) => {
     }
 
     // Check password
+    console.log('Checking password for user:', user.email);
     const isPasswordValid = await user.comparePassword(password);
+    console.log('Password valid:', isPasswordValid);
+    
     if (!isPasswordValid) {
+      console.log('❌ Password invalid, returning error');
       return res.status(400).json({
         success: false,
         message: 'Invalid email or password'
