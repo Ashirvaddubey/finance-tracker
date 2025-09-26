@@ -60,11 +60,16 @@ router.post('/register', async (req, res) => {
 // Login User
 router.post('/login', async (req, res) => {
   try {
+    console.log('Login attempt:', { email: req.body.email, passwordLength: req.body.password?.length });
+    
     const { email, password } = req.body;
 
     // Find user
     const user = await User.findOne({ email });
+    console.log('User found:', user ? 'Yes' : 'No');
+    
     if (!user) {
+      console.log('User not found for email:', email);
       return res.status(400).json({
         success: false,
         message: 'Invalid email or password'
@@ -73,7 +78,10 @@ router.post('/login', async (req, res) => {
 
     // Check password
     const isPasswordValid = await user.comparePassword(password);
+    console.log('Password valid:', isPasswordValid);
+    
     if (!isPasswordValid) {
+      console.log('Invalid password for user:', email);
       return res.status(400).json({
         success: false,
         message: 'Invalid email or password'
@@ -81,7 +89,9 @@ router.post('/login', async (req, res) => {
     }
 
     // Generate token
+    console.log('Generating token for user:', user._id, user.role);
     const token = generateToken(user._id, user.role);
+    console.log('Token generated successfully');
 
     res.json({
       success: true,
