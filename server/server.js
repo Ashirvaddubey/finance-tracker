@@ -28,20 +28,6 @@ app.get('/api/health', (req, res) => {
   res.json({ message: 'Server is running successfully!' });
 });
 
-// Debug endpoint to test request body parsing
-app.post('/api/debug', (req, res) => {
-  console.log('=== DEBUG ENDPOINT ===');
-  console.log('Headers:', req.headers);
-  console.log('Body:', req.body);
-  console.log('Body type:', typeof req.body);
-  console.log('Body keys:', Object.keys(req.body || {}));
-  console.log('=====================');
-  res.json({ 
-    success: true, 
-    received: req.body,
-    headers: req.headers 
-  });
-});
 
 // Connect to MongoDB with better error handling
 const connectDB = async () => {
