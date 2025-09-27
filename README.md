@@ -4,23 +4,23 @@ A full-stack expense tracking application with Role-Based Access Control (RBAC) 
 
 ## 🚀 Live Demo
 
-**Frontend:** https://project-fasmd7y5o-ashirvaddubeys-projects.vercel.app  
+**Frontend:** https://project-qklmw8tws-ashirvaddubeys-projects.vercel.app  
 **Backend:** https://finance-tracker-18ib.onrender.com
 
 ## 🎯 Demo Credentials
 
 ### Admin Account (Full Access)
-- **Email:** `admin@demo.com`
+- **Email:** `demo-admin@test.com`
 - **Password:** `admin123`
 - **Features:** User management, role changes, system statistics
 
 ### User Account (Standard Access)
-- **Email:** `user@demo.com`
+- **Email:** `demo-user@test.com`
 - **Password:** `user123`
 - **Features:** Create/edit/delete expenses, view analytics
 
 ### Read-Only Account (View Only)
-- **Email:** `readonly@demo.com`
+- **Email:** `demo-readonly@test.com`
 - **Password:** `readonly123`
 - **Features:** View expenses and analytics only
 
@@ -76,41 +76,41 @@ A full-stack expense tracking application with Role-Based Access Control (RBAC) 
 ### Installation
 
 1. **Clone the repository**
-   ```bash
+```bash
    git clone https://github.com/Ashirvaddubey/finance-tracker.git
    cd finance-tracker
-   ```
+```
 
 2. **Install frontend dependencies**
-   ```bash
-   npm install
-   ```
+```bash
+npm install
+```
 
 3. **Install backend dependencies**
-   ```bash
-   cd server
-   npm install
-   ```
+```bash
+cd server
+npm install
+```
 
 4. **Set up environment variables**
    ```bash
    # Create .env file in server directory
    MONGO_URI=your_mongodb_connection_string
    JWT_SECRET=your_jwt_secret
-   PORT=5000
+PORT=5000
    NODE_ENV=development
    ```
 
 5. **Start the development servers**
-   ```bash
+```bash
    # Terminal 1 - Backend
-   cd server
-   npm run dev
+cd server
+npm run dev
 
    # Terminal 2 - Frontend
    cd ..
-   npm run dev
-   ```
+npm run dev
+```
 
 6. **Access the application**
    - Frontend: http://localhost:5173
