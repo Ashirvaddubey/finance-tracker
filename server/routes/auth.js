@@ -15,7 +15,7 @@ const generateToken = (userId, role) => {
 // Register User
 router.post('/register', async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
 
     // Check if user exists
     const existingUser = await User.findOne({ email });
@@ -26,8 +26,13 @@ router.post('/register', async (req, res) => {
       });
     }
 
-    // Create user
-    const user = new User({ name, email, password });
+    // Create user with optional role
+    const userData = { name, email, password };
+    if (role && ['admin', 'user', 'read-only'].includes(role)) {
+      userData.role = role;
+    }
+    
+    const user = new User(userData);
     await user.save();
 
     // Generate token

@@ -1,73 +1,70 @@
 import axios from 'axios';
 
-const createDemoUsersViaAPI = async () => {
-  try {
-    console.log('🧪 Creating demo users via API registration...');
-    
-    const demoUsers = [
-      { name: 'Admin User', email: 'admin@demo.com', password: 'admin123', role: 'admin' },
-      { name: 'Standard User', email: 'user@demo.com', password: 'user123', role: 'user' },
-      { name: 'Read-Only User', email: 'readonly@demo.com', password: 'readonly123', role: 'read-only' }
-    ];
+const API_BASE_URL = 'https://finance-tracker-18ib.onrender.com';
 
-    for (const userData of demoUsers) {
-      try {
-        console.log(`\n📝 Registering ${userData.role}: ${userData.email}`);
+async function createDemoViaApi() {
+  const demoUsers = [
+    { name: 'Demo Admin', email: 'demo-admin@test.com', password: 'admin123', role: 'admin' },
+    { name: 'Demo User', email: 'demo-user@test.com', password: 'user123', role: 'user' },
+    { name: 'Demo ReadOnly', email: 'demo-readonly@test.com', password: 'readonly123', role: 'read-only' }
+  ];
+
+  console.log('🚀 Creating demo users via API...\n');
+
+  for (const user of demoUsers) {
+    try {
+      console.log(`Creating ${user.role} user: ${user.email}`);
+      
+      const response = await axios.post(`${API_BASE_URL}/api/auth/register`, {
+        name: user.name,
+        email: user.email,
+        password: user.password
+      });
+
+      if (response.data.success) {
+        console.log(`✅ ${user.role} user created successfully!`);
+        console.log(`   Token: ${response.data.token.substring(0, 20)}...`);
         
-        // First, try to delete existing user if any
-        try {
-          await axios.delete(`https://finance-tracker-18ib.onrender.com/api/users/delete-by-email`, {
-            data: { email: userData.email }
-          });
-          console.log(`   🗑️ Deleted existing user if any`);
-        } catch (deleteError) {
-          // Ignore delete errors
-        }
-
-        // Register new user
-        const response = await axios.post('https://finance-tracker-18ib.onrender.com/api/auth/register', {
-          name: userData.name,
-          email: userData.email,
-          password: userData.password
+        // Test login immediately
+        console.log(`   Testing login...`);
+        const loginResponse = await axios.post(`${API_BASE_URL}/api/auth/login`, {
+          email: user.email,
+          password: user.password
         });
-
-        if (response.data.success) {
-          console.log(`   ✅ Registered successfully`);
-          
-          // Update role if not admin (since registration creates user by default)
-          if (userData.role !== 'user') {
-            try {
-              await axios.put(`https://finance-tracker-18ib.onrender.com/api/users/${response.data.user._id}/role`, {
-                role: userData.role
-              }, {
-                headers: {
-                  'Authorization': `Bearer ${response.data.token}`
-                }
-              });
-              console.log(`   🔄 Updated role to ${userData.role}`);
-            } catch (roleError) {
-              console.log(`   ⚠️ Could not update role: ${roleError.response?.data?.message || roleError.message}`);
-            }
-          }
+        
+        if (loginResponse.data.success) {
+          console.log(`   ✅ Login test passed!`);
+        } else {
+          console.log(`   ❌ Login test failed: ${loginResponse.data.message}`);
         }
-      } catch (error) {
-        console.log(`   ❌ Failed to register ${userData.email}: ${error.response?.data?.message || error.message}`);
+      } else {
+        console.log(`❌ Failed to create ${user.role} user: ${response.data.message}`);
+      }
+    } catch (error) {
+      if (error.response?.status === 400 && error.response?.data?.message?.includes('already exists')) {
+        console.log(`⚠️  ${user.role} user already exists, testing login...`);
+        
+        // Test login for existing user
+        try {
+          const loginResponse = await axios.post(`${API_BASE_URL}/api/auth/login`, {
+            email: user.email,
+            password: user.password
+          });
+          
+          if (loginResponse.data.success) {
+            console.log(`   ✅ Login test passed!`);
+          } else {
+            console.log(`   ❌ Login test failed: ${loginResponse.data.message}`);
+          }
+        } catch (loginError) {
+          console.log(`   ❌ Login error: ${loginError.response?.data?.message || loginError.message}`);
+        }
+      } else {
+        console.log(`❌ Error creating ${user.role} user:`, error.response?.data?.message || error.message);
       }
     }
-
-    console.log('\n🎉 Demo user creation completed!');
-    console.log('\n📋 Test these credentials:');
-    console.log('┌─────────────────┬─────────────────┬─────────────────┐');
-    console.log('│ Email           │ Password        │ Role            │');
-    console.log('├─────────────────┼─────────────────┼─────────────────┤');
-    demoUsers.forEach(user => {
-      console.log(`│ ${user.email.padEnd(15)} │ ${user.password.padEnd(15)} │ ${user.role.padEnd(15)} │`);
-    });
-    console.log('└─────────────────┴─────────────────┴─────────────────┘');
-
-  } catch (error) {
-    console.error('❌ Error:', error);
+    console.log('');
   }
-};
+}
 
-createDemoUsersViaAPI();
+createDemoViaApi();
