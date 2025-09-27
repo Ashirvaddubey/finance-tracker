@@ -12,17 +12,17 @@ A full-stack expense tracking application with Role-Based Access Control (RBAC) 
 ### Admin Account (Full Access)
 - **Email:** `admin@demo.com`
 - **Password:** `admin123`
-- **Features:** User management, role changes, system statistics
+- **Features:** User management, role changes, system statistics, admin dashboard
 
 ### User Account (Standard Access)
-- **Email:** `user@demo.com`
-- **Password:** `user123`
+- **Email:** `testuser@test.com`
+- **Password:** `test123`
 - **Features:** Create/edit/delete expenses, view analytics
 
 ### Read-Only Account (View Only)
-- **Email:** `readonly@demo.com`
+- **Email:** `demo-readonly@test.com`
 - **Password:** `readonly123`
-- **Features:** View expenses and analytics only
+- **Features:** View expenses and analytics only, restricted UI
 
 ## ✨ Features
 
