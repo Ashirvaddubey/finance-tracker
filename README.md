@@ -4,7 +4,7 @@ A full-stack expense tracking application with Role-Based Access Control (RBAC) 
 
 ## 🚀 Live Demo
 
-**Frontend:** https://project-qklmw8tws-ashirvaddubeys-projects.vercel.app  
+**Frontend:** https://project-tau-sooty.vercel.app/  
 **Backend:** https://finance-tracker-18ib.onrender.com
 
 ## 🎯 Demo Credentials
